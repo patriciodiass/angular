@@ -1,0 +1,129 @@
+<div *ngIf="isDataLoaded">
+    <!-- <button mat-icon-button [matMenuTriggerFor]="appMenu">
+    <mat-icon>calendar_today</mat-icon>
+  </button> -->
+    <!-- <mat-menu  class="drop" #appMenu="matMenu">
+      <div class="div"   (click)="$event.stopPropagation()"> -->
+    <!-- <div  id="target" dropzone="true"  ondrop="open(content)" ondragover="event.preventDefault();"   ondragstart="event.dataTransfer.setData('', event.target.id);"> -->
+        <!-- [minDate]="minDate" -->
+
+        <div class="row" >
+    <div class="col-5">
+    <div style="position: relative;bottom: 40px;">
+        <br><br>
+        <!-- <button type="button" class="btn btn-danger" (click)="lockmonth()">
+            <i class="fa fa-lock"></i> Lock month
+        </button> -->
+        <div       
+            class="drop"
+            cdkDropList
+            #calendar="cdkDropList"
+            [cdkDropListData]="daysSelected"
+            [cdkDropListConnectedTo]="[projects]"
+            (cdkDropListDropped)="open($event)">
+            <mat-card class="demo-inline-calendar-card">
+             
+                <mat-calendar
+                [minDate]="mindate"
+                [maxDate]="today"
+                (nextClicked)="change()"
+                [dateFilter]="lockm" 
+                    class="container"
+                    fxLayout="row"
+                    fxLayout.xs="column"
+                    fxLayoutWrap
+                    fxLayoutGap="0.5%"
+                    fxLayoutAlign="center"
+                    #calendar
+                    (selectedChange)="select($event)"
+                    [dateClass]="isSelected"
+                >
+                </mat-calendar>
+            </mat-card>
+        </div>
+    </div></div>
+    <!-- <div class="days"> {{daysSelected|json}}</div> -->
+    <!--   -->
+    <!-- <div *ngIf="daysSelected.includes(import.listofdays)"> -->
+
+    <!-- <mat-card-subtitle>              <div *ngFor="let date of import.listOfDays" class="inputday">| {{date| date: 'dd/MM/yyyy' }}|</div> <br> -->
+<div class="col-7" style="height: 20px;">
+    <!-- <div class="containere" > -->
+        <div *ngIf="project.length > 0">
+            <h2 style="position: relative;left: 160px;">Projects:</h2>
+           <div style="position: relative;left: 245px;bottom: 45px;">  <input [(ngModel)]="query" > </div> 
+        </div>
+        <mat-grid-list cols="2" rowWidth="100px" rowHeight="150px" style="position: relative;left: 150px;bottom: 25px;" [gutterSize]="'0px'"
+            cdkDropList 
+            #projects="cdkDropList"
+            [cdkDropListData]="project"
+            [cdkDropListConnectedTo]="[calendar]"
+            cdkDropListSortingDisabled>
+            
+            <mat-grid-tile   *ngFor="let project of project| search:'name,description':query" cdkDrag>
+                <mat-card class="bdox" >
+                    <mat-card-title class="pname" style="color:white">{{ project.name }}</mat-card-title>
+                    <br />
+                    <mat-card-content class="pdescription">{{ project.description }}</mat-card-content>
+                </mat-card>
+            </mat-grid-tile>
+        </mat-grid-list>
+   
+    
+</div>
+
+
+
+</div> 
+     
+            <div  *ngIf="daysSelected.length===1">
+                <h2 class="imports">Imports of the selected day:</h2>
+            </div>
+            <div *ngIf="daysSelected.length>1">
+                <h2 class="imports">Imports of the selected days:</h2>
+            </div>
+            <div class="row">
+               
+            <div class="cards-box" *ngFor="let import of imports">
+              
+                <mat-card class="importcard">
+                    <mat-card-header>
+                        <div mat-card-avatar class="hours">{{ import.hoursSpent }}H</div>
+                        <mat-card-title class="projecti">
+                            {{ import.projectName }}
+                            <div *ngIf="import.isClosed===false">
+                            <button
+                                type="button"
+                                class="close"
+                                aria-label="Close"
+                                (click)="delete(import.id)" >
+                                <span aria-hidden="true">&times;</span>
+                            </button></div></mat-card-title >
+                        <!-- <mat-card-subtitle *ngFor="let date of import.listOfDays" class="inputday">{{date|date:'dd/MM/yyyy'}}</mat-card-subtitle> -->
+                    </mat-card-header>
+                    <mat-card-content>
+                        <div class="inputday">
+                            <ng-container *ngFor="let date of import.listOfDays">|{{ date | date: 'dd/MM/yyyy' }}|</ng-container>
+                        </div>
+                        <br /><div style="color: rgb(139, 136, 136)"
+                          
+                        >
+                        {{ import.observations }}
+                    </div> </mat-card-content>
+                </mat-card></div>
+            </div>
+        
+    
+    <!-- 
+    <div  cdkDropList #projects="cdkDropList" 
+    [cdkDropListData]="project"
+    [cdkDropListConnectedTo]="[calendar]" class="row" cdkDropListSortingDisabled >
+        <div *ngFor="let project of project" class="column" cdkDrag> 
+       <mat-card  class="card">
+           <mat-card-title>{{project.name}}</mat-card-title>
+           <mat-card-content>{{project.description}} </mat-card-content>
+       </mat-card><br>
+    
+        </div>
+    </div> -->
+</div>

@@ -1,0 +1,20 @@
+.cdk-global-overlay-wrapper, .cdk-overlay-container {
+    z-index: 99999 !important;
+ }
+ .type{
+     width: 500px;
+ }
+ .modal-header{
+    font-size: 20px;
+}
+label{
+    font-size: 17px;
+    font-weight: 500;
+}
+.title{
+    position: relative;
+    top: 9px;
+}
+.myPanelClass{
+    margin-top: 300px !important; 
+}

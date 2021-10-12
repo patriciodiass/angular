@@ -1,0 +1,50 @@
+
+<ng-container *ngIf="this.data.type; then update; else newp">
+</ng-container>
+<ng-template #update>
+    <div class="modal-header">
+       <h2 class="title"> Edit Project Type</h2>
+        <button type="button" class="btn btn-danger" style="position:relative; top:5px" (click)="delete(id)">
+            <i class="fa fa-trash"></i> delete
+        </button>      </div></ng-template>
+
+<ng-template #newp>
+    <div class="modal-header">
+     <h2 class="title">   Create New Project Type</h2>
+      </div></ng-template>
+ 
+
+      <div class="modal-body">
+          <form [formGroup]="form" >
+          <div class="form-group">
+            <label for="hoursSpent">Type</label>
+            <div class="input-group">
+                <textarea name="Text1" cols="40" rows="1" class="form-control"  formControlName="type" required></textarea><p></p>
+              <div *ngIf="type.invalid && (type.dirty || type.touched)"
+              class="alert alert-danger">
+            <div *ngIf="type.errors?.required">
+                Type is required.
+            </div>
+              <div class="input-group-append">
+              </div>
+        </div>
+    </div>
+          </div>
+        </form>
+        </div>
+
+      <div class="modal-footer"> 
+          <button type="button" class="btn btn-danger" (click)="close()"><i class="fa fa-close"></i>  Cancel</button>
+        <ng-container *ngIf="this.data.type; then updateb; else newpb">
+        </ng-container>
+        
+        <ng-template #updateb>
+            <button type="button" class="btn btn-success"  
+            (click)="updateprojecttype()"><i class="fa fa-folder"></i>  update</button>
+        </ng-template>
+        
+        <ng-template #newpb>
+            <button type="button" class="btn btn-success"  (click)="save()"><i class="fa fa-folder"></i>  Save</button>
+        </ng-template>
+          </div>
+   

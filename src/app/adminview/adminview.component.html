@@ -1,0 +1,87 @@
+<!-- <mat-toolbar class="mat-elevation-z8">
+    <button mat-icon-button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
+        <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
+        <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
+    </button>
+</mat-toolbar>
+
+<mat-sidenav-container>
+    <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8" opened>
+        <mat-divider></mat-divider>
+        <div *ngFor="let item of project">
+            <button
+                mat-button
+                color="primary"
+                (click)="selectedproject(item.id, item.name)"
+                (click)="sidenav.close()"
+                class="menu-button"
+            >
+                {{ item.name }}
+            </button>
+            <mat-divider></mat-divider>
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content> -->
+        <!-- Main content here! -->
+        <div class="row">
+            <div class="col-lg">
+                <h1 class="title">{{ this.selectedprojectname }}</h1>
+            </div>
+        </div>
+        <div *ngIf="isselected">
+            
+                <mat-grid-list cols="6" rowWidth="100px" rowHeight="150px">
+                    <mat-grid-tile *ngFor="let item of this.users">
+                        <mat-card>
+                            <mat-card-title>{{ item.name }}</mat-card-title>
+                            <mat-card-subtitle>{{ item.email }}</mat-card-subtitle>
+                            <mat-card-actions>
+                                <button mat-button (click)="opendetails(item.email, item.id)">
+                                    Open user details
+                                </button>
+                            </mat-card-actions>
+                        </mat-card>
+                        <br />
+                    </mat-grid-tile>
+                </mat-grid-list>
+           
+        </div>
+        <br />
+        <br />
+        <div *ngIf="this.dataSource.length > 0">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-100">
+                <ng-container matColumnDef="observations">
+                    <th mat-header-cell *matHeaderCellDef class="header">observations</th>
+                    <td mat-cell *matCellDef="let element">{{ element.observations }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="listOfDays">
+                    <th mat-header-cell *matHeaderCellDef class="header">List Of Days</th>
+                    <td mat-cell *matCellDef="let element">{{ element.listOfDays | date }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="hoursSpent">
+                    <th mat-header-cell *matHeaderCellDef class="header">Hours Spent</th>
+                    <td mat-cell *matCellDef="let element">{{ element.hoursSpent }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="training">
+                    <th mat-header-cell *matHeaderCellDef class="header">Training</th>
+                    <td mat-cell *matCellDef="let element">{{ element.training }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="exterior">
+                    <th mat-header-cell *matHeaderCellDef class="header">Exterior</th>
+                    <td mat-cell *matCellDef="let element">{{ element.exterior }}</td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+        </div>
+
+        <div *ngIf="this.dataSource.length === 0">
+            <h2>No imports for selected project</h2>
+        </div>
+    <!-- </mat-sidenav-content>
+</mat-sidenav-container> -->

@@ -1,0 +1,110 @@
+<ng-container *ngIf="this.data.name; then update; else newp"> </ng-container>
+
+<ng-template #update>
+    <div class="modal-header">
+     <h2 class="title">   Edit Project</h2>
+        <button type="button" class="btn btn-danger" style="position:relative; top:5px" (click)="delete(id)">
+            <i class="fa fa-trash" ></i> delete
+        </button>
+    </div></ng-template>
+
+<ng-template #newp> <div class="modal-header"><h2 class="title">Create New Project</h2></div></ng-template>
+<div class="modal-body">
+    <form [formGroup]="form">
+        <div class="form-group">
+            <label for="hoursSpent">Name</label>
+            <div class="input-group">
+                <textarea
+                    name="Text1"
+                    cols="40"
+                    rows="1"
+                    class="form-control"
+                    formControlName="Name"
+                    required
+                ></textarea>
+                <p></p>
+                <div
+                    *ngIf="Name.invalid && (Name.dirty || Name.touched)"
+                    class="alert alert-danger" >
+                    <div *ngIf="Name.errors?.required">Name is required.</div>
+                    <div class="input-group-append"></div>
+                </div>
+            </div>
+            <p></p>
+            <label for="observations">Description</label>
+            <div class="input-group">
+                <!-- <input word-break:break-word; type="text" class="form-control"  formControlName="observations" required><p></p> -->
+                <textarea
+                    name="Text1"
+                    cols="40"
+                    rows="4"
+                    class="form-control"
+                    formControlName="Description"
+                    required
+                ></textarea>
+                <p></p>
+                <!-- <textarea id="observation"  class="ta" formControlName="observation"> -->
+                <div
+                    *ngIf="Description.invalid && (Description.dirty || Description.touched)"
+                    class="alert alert-danger"
+                >
+                    <div *ngIf="Description.errors?.required">Description is required.</div>
+                    <div class="input-group-append"></div>
+                </div>
+            </div>
+            <br />
+            <label for="projectTypeId">Project Type</label>
+            <div class="input-group">
+                <mat-form-field appearance="fill" class="type">
+                    <mat-label>Select</mat-label>
+                    <mat-select disableOptionCentering formControlName="projectTypeId">
+                        <mat-option
+                            *ngFor="let type of projecttypes"
+                            [value]="type.id"
+                            class="form-control"
+                        >
+                            {{ type.type }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div class="input-group-append"></div>
+            </div>
+            <!-- <mat-slide-toggle class="toggle"></mat-slide-toggle>              -->
+            <br />
+            <label for="Users">Users</label>
+            <div class="input-group">
+                <mat-form-field appearance="fill" class="type">
+                    <mat-label>Select</mat-label>
+                    <mat-select formControlName="userIds" disableOptionCentering  multiple>
+                        <mat-option *ngFor="let user of users" [value]="user.id">
+                            {{ user.email }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div class="input-group-append"></div>
+            </div>
+            <!-- <label for="training" class="col-form-label">Training</label><p></p>
+              <mat-slide-toggle class="toggle"  ></mat-slide-toggle>               -->
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="close()">
+        <i class="fa fa-close"></i> Cancel
+    </button>
+
+    <ng-container *ngIf="this.data.name; then updateb; else newpb"> </ng-container>
+
+    <ng-template #newpb>
+        <button class="btn btn-success" (click)="save()">
+            <i class="fa fa-folder"></i> save
+        </button></ng-template
+    >
+
+    <ng-template #updateb>
+        <button class="btn btn-success" (click)="updateProject()">
+            <i class="fa fa-folder"></i> update
+        </button>
+    </ng-template>
+</div>

@@ -1,0 +1,40 @@
+// table {
+//     width: 100%;
+//   }
+// .button{
+//       width: fit-content;
+//       height: 50px;
+//    position: absolute;
+//    left: 980px;
+//   }
+
+//   h2{
+//     position: absolute;
+//     top: 90px;
+//     font-size: larger;
+//   }
+
+.header{
+    color: black;
+    font-size:medium;
+}
+
+
+.mat-row .mat-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+  }
+  
+  .mat-row:hover .mat-cell {
+    border-color: currentColor;
+    background-color: whitesmoke;
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+  }
+  .title{
+      font-weight: 500;
+  }
+  .myPanelClass{
+    margin-top: 30px !important; 
+}

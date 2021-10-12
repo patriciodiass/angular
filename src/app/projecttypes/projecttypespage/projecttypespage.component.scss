@@ -1,0 +1,41 @@
+//   .typebutton{
+//     width: fit-content;
+//     height: 50px;
+//  position: absolute;
+//  left: 750px;
+//   }
+// table {
+//     width: 800px;
+//     position: absolute;
+//     right: 600px;
+//   }
+
+//   h2{
+//     position: absolute;
+//     top: 90px;
+//     left: 520px;
+//     font-size: larger;
+//   }
+  
+.header{
+    color: black;
+    font-size:medium;
+}
+  .mat-row .mat-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+  }
+  
+  .mat-row:hover .mat-cell {
+    border-color: currentColor;
+    background-color: whitesmoke;
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+  }
+  .light-blue-backdrop {
+    background-color: #5cb3fd;
+  }
+  .title{
+    font-weight: 500;
+}

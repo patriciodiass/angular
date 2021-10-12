@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="col-lg">
+        <h1 class="title">Projects</h1>     
+
+    </div>
+</div>
+    <div class="row">
+
+    <div class="col-lg-12" style="height: 60px;">
+        <button mat-raised-button  color="primary" class="button float-right h-100" (click)="newproject()" >
+            <mat-icon>add</mat-icon>New Project</button>
+    </div>
+</div>
+
+   
+
+<div class="row">
+    <div class="col-xl">
+        <table mat-table  [dataSource]="dataSource" class="mat-elevation-z8 w-100">
+
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef class="header"> Name </th>
+              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+          
+            
+            <ng-container matColumnDef="description">
+              <th mat-header-cell *matHeaderCellDef class="header"> Description </th>
+              <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="projectType">
+              <th mat-header-cell *matHeaderCellDef class="header"> ProjectType </th>
+              <td mat-cell *matCellDef="let element"> {{element.projectType}} </td>
+            </ng-container>
+            <div click-stop-propagation>Stop Propagation</div>
+            <ng-container matColumnDef="actions">
+                <th  mat-header-cell  *matHeaderCellDef class="header"> Actions </th>
+                <th mat-cell *matCellDef="let element" >
+                     <button mat-button routerLink="/adminview" (click)="opendetails($event,row.name)" >Details</button>
+                     <app-item-detail [item]="currentItem"></app-item-detail>
+
+                </th>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row (click)="editproject(row)" *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+    </div>
+</div>
+       
