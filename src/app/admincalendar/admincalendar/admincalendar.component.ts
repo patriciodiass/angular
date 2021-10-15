@@ -141,7 +141,7 @@ export class AdmincalendarComponent implements OnInit {
         else this.daysSelected.splice(index, 1);
         this.calendar.updateTodaysDate();
         this.cdr.detectChanges();
-        this.ImportService.getListByDayBySelectedDays(this.daysSelected).subscribe(importa => {
+        this.ImportService.getAllListByDayBySelectedDays(this.daysSelected).subscribe(importa => {
             this.imports = importa;
             this.daysused();
             console.log(this.imports);
@@ -155,6 +155,7 @@ export class AdmincalendarComponent implements OnInit {
         this.cdRef.detectChanges();
 
     }
+    
     formatDate(date: Date): string {
         return (
             date.getFullYear() +
@@ -164,6 +165,7 @@ export class AdmincalendarComponent implements OnInit {
             ('00' + date.getDate()).slice(-2)
         );
     }
+
     lockm = (d: Date): boolean => {
         return d.getDay() !== 0 && d.getDay() !== 6;
     };

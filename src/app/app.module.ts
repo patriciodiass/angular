@@ -59,6 +59,9 @@ import { AdmincalendarComponent } from './admincalendar/admincalendar/admincalen
 import { MomentDateModule } from '@angular/material-moment-adapter';
 import { AdminviewComponent } from './adminview/adminview.component';
 import { UserdetailsComponent } from './modal/userdetails/userdetails/userdetails.component';
+import { TagInputModule } from 'ngx-chips';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { TagsComponent } from './tags/tags.component';
 
 
 
@@ -66,9 +69,9 @@ import { UserdetailsComponent } from './modal/userdetails/userdetails/userdetail
   imports: [ 
     MbscModule, BrowserModule,
     FormsModule,MatInputModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule,TagInputModule,
     HttpClientModule,MomentDateModule,
-    HttpClientJsonpModule,
+    HttpClientJsonpModule,NgSelectModule,
     MatSliderModule,MatPaginatorModule,
     MatIconModule,MatExpansionModule,
     MatListModule,SharedModule,
@@ -94,7 +97,7 @@ import { UserdetailsComponent } from './modal/userdetails/userdetails/userdetail
     NgxsModule.forRoot(),
     ThemeBasicModule.forRoot(),
   ],
-  declarations: [AppComponent, CalendarComponent,TableFilterPipe, ModalComponent, ComfirmDeleteComponent, ProjectsComponent, NewprojectComponent, ProjecttypeComponent, ProjecttypespageComponent, PipeComponent, ImportsComponent, MyApplicationLayoutComponent, LogoComponent, RoutesComponent, NavItemsComponent, YourNewRoleComponent, AdmincalendarComponent, AdminviewComponent, UserdetailsComponent],
+  declarations: [AppComponent, CalendarComponent,TableFilterPipe, ModalComponent, ComfirmDeleteComponent, ProjectsComponent, NewprojectComponent, ProjecttypeComponent, ProjecttypespageComponent, PipeComponent, ImportsComponent, MyApplicationLayoutComponent, LogoComponent, RoutesComponent, NavItemsComponent, YourNewRoleComponent, AdmincalendarComponent, AdminviewComponent, UserdetailsComponent, TagsComponent],
   providers: [APP_ROUTE_PROVIDER,CalendarComponent],
   bootstrap: [AppComponent],
 })

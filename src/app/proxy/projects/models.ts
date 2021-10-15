@@ -12,6 +12,7 @@ export interface ProjectDto extends FullAuditedEntityDto<string> {
   description?: string;
   projectTypeId?: string;
   projectType?: string;
+  projectTypeColor?: string;
 }
 
 export interface UpdateProjectDto {

@@ -3,7 +3,7 @@ import { NewprojectComponent } from './../../modal/new-project/newproject/newpro
 import { UserService } from './../../proxy/users/user.service';
 import { ProjectDto } from './../../proxy/projects/models';
 import { ProjectService } from './../../proxy/projects/project.service';
-import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit, Output, EventEmitter } from '@angular/core';
 import { ViewEncapsulation } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationService } from '@abp/ng.theme.shared';
@@ -38,7 +38,7 @@ export class ProjectsComponent implements OnInit {
 
     ngOnInit(): void {
         debugger;
-        this.ProjectService.getMyProjects().subscribe(projects => {
+        this.ProjectService.getListOfProjects().subscribe(projects => {
             this.projects = projects;
             this.dataSource = this.projects;
 
@@ -51,7 +51,7 @@ export class ProjectsComponent implements OnInit {
             result => {},
             reason => {
                 console.log(`Closed with: ${reason}`);
-                this.ProjectService.getMyProjects().subscribe(projects => {
+                this.ProjectService.getListOfProjects().subscribe(projects => {
                     this.projects = projects;
                     this.dataSource = this.projects;
                 });
@@ -75,7 +75,7 @@ export class ProjectsComponent implements OnInit {
                 result => {},
                 reason => {
                     console.log(`Closed with: ${reason}`);
-                    this.ProjectService.getMyProjects().subscribe(projects => {
+                    this.ProjectService.getListOfProjects().subscribe(projects => {
                         this.projects = projects;
                         this.dataSource = this.projects;
                     });
@@ -85,8 +85,8 @@ export class ProjectsComponent implements OnInit {
     }
 
     currentItem:any;
-    opendetails(event:any,row:any){  debugger
-        this.currentItem = row;
+    opendetails(event:any){  debugger
+       
 
         event.stopPropagation();
         // this.router.navigate([`${Admin View}`]);

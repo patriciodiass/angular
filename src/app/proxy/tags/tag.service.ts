@@ -1,4 +1,4 @@
-import type { CreateUpdateTagDto, TagDto } from './models';
+import type { TagDto } from './models';
 import { RestService } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
 
@@ -8,11 +8,11 @@ import { Injectable } from '@angular/core';
 export class TagService {
   apiName = 'Default';
 
-  create = (input: CreateUpdateTagDto) =>
+  createMany = (tagDtos: TagDto[]) =>
     this.restService.request<any, void>({
       method: 'POST',
-      url: '/api/app/tag',
-      body: input,
+      url: '/api/app/tag/many',
+      body: tagDtos,
     },
     { apiName: this.apiName });
 

@@ -1,3 +1,4 @@
+import { TagsComponent } from './tags/tags.component';
 import { AdminviewComponent } from './adminview/adminview.component';
 import { AdmincalendarComponent } from './admincalendar/admincalendar/admincalendar.component';
 import { ImportsComponent } from './imports/imports.component';
@@ -10,45 +11,41 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProjecttypespageComponent } from './projecttypes/projecttypespage/projecttypespage.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    pathMatch: 'full',
-    loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
-  },
-  {
-    path: 'account',
-    loadChildren: () => import('@abp/ng.account').then(m => m.AccountModule.forLazy()),
-  },
-  {
-    path: 'identity',
-    loadChildren: () => import('@abp/ng.identity').then(m => m.IdentityModule.forLazy()),
-  },
-  {
-    path: 'tenant-management',
-    loadChildren: () =>
-      import('@abp/ng.tenant-management').then(m => m.TenantManagementModule.forLazy()),
-  },
-  {
-    path: 'setting-management',
-    loadChildren: () =>
-      import('@abp/ng.setting-management').then(m => m.SettingManagementModule.forLazy()),
-  },
-  { path: 'calendar', component:CalendarComponent
-},  
-{ path: 'projects', component:ProjectsComponent
-},
-{ path: 'projecttypes', component:ProjecttypespageComponent
-},
-{ path: 'imports', component:ImportsComponent
-},
-{ path: 'admincalendar', component:AdmincalendarComponent
-},
-{ path: 'adminview', component:AdminviewComponent
-},
+    {
+        path: '',
+        pathMatch: 'full',
+        loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
+    },
+    {
+        path: 'account',
+        loadChildren: () => import('@abp/ng.account').then(m => m.AccountModule.forLazy()),
+    },
+    {
+        path: 'identity',
+        loadChildren: () => import('@abp/ng.identity').then(m => m.IdentityModule.forLazy()),
+    },
+    {
+        path: 'tenant-management',
+        loadChildren: () =>
+            import('@abp/ng.tenant-management').then(m => m.TenantManagementModule.forLazy()),
+    },
+    {
+        path: 'setting-management',
+        loadChildren: () =>
+            import('@abp/ng.setting-management').then(m => m.SettingManagementModule.forLazy()),
+    },
+    { path: 'calendar', component: CalendarComponent },
+    { path: 'projects', component: ProjectsComponent },
+    { path: 'projecttypes', component: ProjecttypespageComponent },
+    { path: 'imports', component: ImportsComponent },
+    { path: 'admincalendar', component: AdmincalendarComponent },
+    { path: 'projects/:id', component: AdminviewComponent },
+    { path: 'tags', component: TagsComponent },
+
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
-  exports: [RouterModule],
+    imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
+    exports: [RouterModule],
 })
 export class AppRoutingModule {}

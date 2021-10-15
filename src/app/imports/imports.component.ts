@@ -109,7 +109,7 @@ getimportsbymonth(event: any){debugger
     this.date = this.formatDate(event);
     
     this.rangePicker.close()
-    this.ImportService.importsOfAllUsersByMonthByDateTimeAndLock(this.date,true).subscribe(imports =>{
+    this.ImportService.getListOfCurrentMonthByDateTime(this.date).subscribe(imports =>{
         this.userimports=imports;
         this.items = imports;
         this.count=imports.length;

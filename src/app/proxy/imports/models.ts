@@ -9,6 +9,7 @@ export interface CreateImportDto {
   observations?: string;
   userId?: string;
   isClosed: boolean;
+  tagIds: string[];
 }
 
 export interface ImportDto extends FullAuditedEntityDto<string> {
@@ -21,6 +22,8 @@ export interface ImportDto extends FullAuditedEntityDto<string> {
   training: boolean;
   observations?: string;
   isClosed: boolean;
+  userName?: string;
+  userSurname?: string;
 }
 
 export interface UpdateImportDto {
@@ -31,4 +34,5 @@ export interface UpdateImportDto {
   training: boolean;
   observations?: string;
   isClosed: boolean;
+  tagIds: string[];
 }

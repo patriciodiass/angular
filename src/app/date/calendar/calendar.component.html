@@ -53,7 +53,7 @@
             <h2 style="position: relative;left: 160px;">Projects:</h2>
            <div style="position: relative;left: 245px;bottom: 45px;">  <input [(ngModel)]="query" > </div> 
         </div>
-        <mat-grid-list cols="2" rowWidth="100px" rowHeight="150px" style="position: relative;left: 150px;bottom: 25px;" [gutterSize]="'0px'"
+        <mat-grid-list cols="2" rowWidth="100px" rowHeight="150px" class="projectgrid"  [gutterSize]="'0px'"
             cdkDropList 
             #projects="cdkDropList"
             [cdkDropListData]="project"

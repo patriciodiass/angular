@@ -35,7 +35,7 @@ export class ProjectTypeService {
     this.restService.request<any, PagedResultDto<ProjectTypeDto>>({
       method: 'GET',
       url: '/api/app/project-type',
-      params: { skipCount: input.skipCount, maxResultCount: input.maxResultCount, sorting: input.sorting },
+      params: { sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
     },
     { apiName: this.apiName });
 

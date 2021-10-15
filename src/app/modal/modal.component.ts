@@ -1,3 +1,5 @@
+import { TagService } from './../proxy/tags/tag.service';
+import { TagDto } from './../proxy/tags/models';
 import { CalendarComponent } from './../date/calendar/calendar.component';
 import { Project } from 'src/app/modules/project.module';
 import { ProjectService } from './../proxy/projects/project.service';
@@ -9,7 +11,15 @@ import de from '@mobiscroll/angular/dist/js/i18n/de';
 import { ListService, PagedResultDto } from '@abp/ng.core';
 import { ImportService, ImportDto } from '@proxy/imports';
 import { ConfirmationService, Confirmation } from '@abp/ng.theme.shared';
+import { Observable } from 'rxjs';
+import { of } from 'rxjs';
+import { TagInputModule } from 'ngx-chips';
+import { TagModel } from 'ngx-chips/core/accessor';
 
+export interface AutoCompleteModel {
+    value: any;
+    display: string;
+}
 @Component({
     selector: 'app-modal',
     template: `{{ imports }}`,
@@ -22,7 +32,8 @@ export class ModalComponent implements OnInit {
     @Input() daata: string = '';
     @Output() Project = new EventEmitter();
     @Input() imports: Array<ImportDto>;
-
+    responseRawGenreList: Array<TagDto> = [];
+    newtags: Array<TagDto> = [];
     form: FormGroup = new FormGroup({
         observations: new FormControl('', [Validators.required]),
 
@@ -32,6 +43,8 @@ export class ModalComponent implements OnInit {
         training: new FormControl(false),
         listOfDays: new FormControl(),
         projectId: new FormControl(),
+        tagid: new FormControl(),
+        isClosed:new FormControl(false),
     });
     CalendarComponent: any;
     get hoursSpent() {
@@ -43,6 +56,7 @@ export class ModalComponent implements OnInit {
     // get listOfDays() {return this.form.get('CalendarComponent')}
 
     constructor(
+        private TagService: TagService,
         private formBuilder: FormBuilder,
         private confirmation: ConfirmationService,
         public calendarComponent: CalendarComponent,
@@ -53,7 +67,11 @@ export class ModalComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        debugger;
+        this.TagService.getTagsList().subscribe(imports => {
+            debugger;
+
+            this.responseRawGenreList = imports;
+        });
         if (this.data) {
             this.name = this.data.nameproject;
             this.form.patchValue({
@@ -64,7 +82,16 @@ export class ModalComponent implements OnInit {
         }
     }
     name = '';
+    savetags() {
+        console.log(this.newtags);
+        this.TagService.createMany(this.newtags).subscribe(() => {
+            debugger;
 
+            this.list.get();
+
+            debugger;
+        });
+    }
     save() {
         debugger;
         if (this.observations.errors || this.hoursSpent.errors) {
@@ -75,15 +102,31 @@ export class ModalComponent implements OnInit {
                 this.form.reset();
                 this.list.get();
                 this.activeModal.dismiss();
-                debugger
+                debugger;
             });
             this.ImportService.getListByDayBySelectedDays(this.data.listofdays).subscribe(
                 importa => {
                     this.imports = importa;
                 }
             );
+            debugger;
         }
     }
+
+    addCustomtag = term => ({ id: term, name: term });
+
+    onAdding(tag: TagDto) {
+        console.log(this.newtags);
+        const index = this.responseRawGenreList.findIndex(x => x == tag);
+        debugger;
+        if (index < 0) this.newtags.push(tag);
+        else debugger;
+        return;
+    }
+
+    // public requestAutocompleteItems = (text: any): Observable<any> => {
+    //     return of(this.responseRawGenreList);
+    //   };
 
     close() {
         this.activeModal.dismiss('Closed success');
