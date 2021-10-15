@@ -32,7 +32,7 @@ export class ModalComponent implements OnInit {
     @Input() daata: string = '';
     @Output() Project = new EventEmitter();
     @Input() imports: Array<ImportDto>;
-    responseRawGenreList: Array<TagDto> = [];
+    autocompleteItemsAsObjects: Array<TagDto> = [];
     newtags: Array<TagDto> = [];
     form: FormGroup = new FormGroup({
         observations: new FormControl('', [Validators.required]),
@@ -43,8 +43,8 @@ export class ModalComponent implements OnInit {
         training: new FormControl(false),
         listOfDays: new FormControl(),
         projectId: new FormControl(),
-        tagid: new FormControl(),
-        isClosed:new FormControl(false),
+        tagIds: new FormControl(),
+        isClosed: new FormControl(false),
     });
     CalendarComponent: any;
     get hoursSpent() {
@@ -70,7 +70,7 @@ export class ModalComponent implements OnInit {
         this.TagService.getTagsList().subscribe(imports => {
             debugger;
 
-            this.responseRawGenreList = imports;
+            this.autocompleteItemsAsObjects = imports;
         });
         if (this.data) {
             this.name = this.data.nameproject;
@@ -92,6 +92,7 @@ export class ModalComponent implements OnInit {
             debugger;
         });
     }
+
     save() {
         debugger;
         if (this.observations.errors || this.hoursSpent.errors) {
@@ -115,14 +116,14 @@ export class ModalComponent implements OnInit {
 
     addCustomtag = term => ({ id: term, name: term });
 
-    onAdding(tag: TagDto) {
-        console.log(this.newtags);
-        const index = this.responseRawGenreList.findIndex(x => x == tag);
-        debugger;
-        if (index < 0) this.newtags.push(tag);
-        else debugger;
-        return;
-    }
+    // onAdding(tag: TagDto) {
+    //     console.log(this.newtags);
+    //     const index = this.responseRawGenreList.findIndex(x => x == tag);
+    //     debugger;
+    //     if (index < 0) this.newtags.push(tag);
+    //     else debugger;
+    //     return;
+    // }
 
     // public requestAutocompleteItems = (text: any): Observable<any> => {
     //     return of(this.responseRawGenreList);

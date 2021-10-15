@@ -65,7 +65,35 @@
                 <mat-slide-toggle class="toggle" formControlName="training"></mat-slide-toggle>
                 <div class="input-group-append"></div>
             </div>
-            <br /><hr />
+            <br />
+            <label for="Tag">Tags</label>
+            <div class="input-group">
+                <mat-form-field appearance="fill" class="type">
+                    <mat-label>Select</mat-label>
+                    <mat-select formControlName="tagIds" disableOptionCentering  multiple>
+                        <mat-option *ngFor="let user of autocompleteItemsAsObjects" [value]="user.id">
+                            {{ user.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div class="input-group-append"></div>
+            </div>
+
+            <!-- <tag-input  [onlyFromAutocomplete]="true"       formControlName="tagid"       
+            >
+                <tag-input-dropdown
+                    [showDropdownIfEmpty]="true"
+                    [focusFirstElement]="true"
+                    [displayBy]="'name'"
+                    [identifyBy]="'id'"
+                    [autocompleteItems]="autocompleteItemsAsObjects"
+                >
+                    <!-- <ng-template let-item="item" let-index="index"                     
+                    >
+                        ({{ index }}) {{ item.id }}: {{ item.value }}
+                    </ng-template> -->
+                <!-- </tag-input-dropdown>
+            </tag-input> -->
             <!-- <tag-input
                 [(ngModel)]="newtags"
                 [ngModelOptions]="{ standalone: true }"
@@ -73,7 +101,7 @@
             >   
 
             </tag-input> -->
-            <label>Tags</label>
+            <!-- <label>Tags</label>
             <ng-select 
           
             [items]="responseRawGenreList"
@@ -85,7 +113,7 @@
                        [(ngModel)]="newtags"
                        formControlName="tagid">
                        
-            </ng-select>
+            </ng-select> -->
 
             <!-- <label for="training" class="col-form-label">Training</label><p></p>
               <mat-slide-toggle class="toggle"  ></mat-slide-toggle>               -->
@@ -100,7 +128,7 @@
     <button type="button" class="btn btn-success" (click)="save()">
         <i class="fa fa-folder"></i> Save
     </button>
-    <button type="button" class="btn btn-success" (click)="savetags()">
+    <!-- <button type="button" class="btn btn-success" (click)="savetags()">
         <i class="fa fa-folder"></i> Savetags
-    </button>
+    </button> -->
 </div>

@@ -62,6 +62,7 @@ import { UserdetailsComponent } from './modal/userdetails/userdetails/userdetail
 import { TagInputModule } from 'ngx-chips';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TagsComponent } from './tags/tags.component';
+import { TagmodalComponent } from './modal/tag-modal/tagmodal/tagmodal.component';
 
 
 
@@ -97,7 +98,7 @@ import { TagsComponent } from './tags/tags.component';
     NgxsModule.forRoot(),
     ThemeBasicModule.forRoot(),
   ],
-  declarations: [AppComponent, CalendarComponent,TableFilterPipe, ModalComponent, ComfirmDeleteComponent, ProjectsComponent, NewprojectComponent, ProjecttypeComponent, ProjecttypespageComponent, PipeComponent, ImportsComponent, MyApplicationLayoutComponent, LogoComponent, RoutesComponent, NavItemsComponent, YourNewRoleComponent, AdmincalendarComponent, AdminviewComponent, UserdetailsComponent, TagsComponent],
+  declarations: [AppComponent, CalendarComponent,TableFilterPipe, ModalComponent, ComfirmDeleteComponent, ProjectsComponent, NewprojectComponent, ProjecttypeComponent, ProjecttypespageComponent, PipeComponent, ImportsComponent, MyApplicationLayoutComponent, LogoComponent, RoutesComponent, NavItemsComponent, YourNewRoleComponent, AdmincalendarComponent, AdminviewComponent, UserdetailsComponent, TagsComponent, TagmodalComponent],
   providers: [APP_ROUTE_PROVIDER,CalendarComponent],
   bootstrap: [AppComponent],
 })

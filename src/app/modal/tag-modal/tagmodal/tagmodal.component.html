@@ -1,0 +1,31 @@
+
+    <div class="modal-header">
+     <h2 class="title">   Create New Tag</h2>
+      </div>
+ 
+
+      <div class="modal-body">
+          <form [formGroup]="form" >
+          <div class="form-group">
+            <label for="Name">Name</label>
+            <div class="input-group">
+                <textarea name="Text1" cols="40" rows="1" class="form-control"  formControlName="Name" required></textarea><p></p>
+              <div *ngIf="Name.invalid && (Name.dirty || Name.touched)"
+              class="alert alert-danger">
+            <div *ngIf="Name.errors?.required">
+                Name is required.
+            </div>
+              <div class="input-group-append">
+              </div>
+        </div>
+    </div>
+          </div>
+        </form>
+        </div>
+
+      <div class="modal-footer"> 
+          <button type="button" class="btn btn-danger" (click)="close()"><i class="fa fa-close"></i>  Cancel</button>
+        
+            <button type="button" class="btn btn-success"  (click)="save()"><i class="fa fa-folder"></i>  Save</button>
+          </div>
+   
