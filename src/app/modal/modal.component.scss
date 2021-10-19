@@ -18,3 +18,13 @@ label{
 .type{
     width: 500px;
 }
+.dropd{position: fixed;
+    z-index: 999999;    
+}
+.cdk-overlay-container {
+    position: fixed;
+    z-index: 1051;
+  }
+  ::ng-deep .cdk-overlay-container {
+    z-index: 1050;
+   }

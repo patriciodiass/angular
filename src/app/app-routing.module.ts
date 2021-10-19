@@ -33,7 +33,7 @@ const routes: Routes = [
         path: 'setting-management',
         loadChildren: () =>
             import('@abp/ng.setting-management').then(m => m.SettingManagementModule.forLazy()),
-    },
+     },
     { path: 'calendar', component: CalendarComponent },
     { path: 'projects', component: ProjectsComponent },
     { path: 'projecttypes', component: ProjecttypespageComponent },

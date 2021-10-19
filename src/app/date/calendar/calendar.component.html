@@ -11,6 +11,8 @@
     <div class="col-5">
     <div style="position: relative;bottom: 40px;">
         <br><br>
+        <div *ngIf="monthlock"><mat-card style="width: 400px;"><h2 style="color: red;position: relative;left: 120px;"><i class="fa fa-lock"></i>   Month locked</h2></mat-card></div>
+
         <!-- <button type="button" class="btn btn-danger" (click)="lockmonth()">
             <i class="fa fa-lock"></i> Lock month
         </button> -->

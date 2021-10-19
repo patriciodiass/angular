@@ -1,3 +1,4 @@
+import { MonthService } from './../../proxy/months/month.service';
 import { UserDto } from './../../proxy/users/models';
 import { UserService } from './../../proxy/users/user.service';
 import { ProjectDto } from './../../proxy/projects/models';
@@ -57,7 +58,8 @@ export class CalendarComponent implements OnInit {
         private confirmation: ConfirmationService,
         private ImportService: ImportService,
         private ProjectService: ProjectService,
-        private UserService: UserService
+        private UserService: UserService,
+        private MonthService:MonthService,
     ) {}
 
     ngOnInit() {     
@@ -86,12 +88,16 @@ this.mindate=new Date('2019-09-06');
 
     open(event: CdkDragDrop<PagedResultDto<ProjectDto>>) {
         //this.selectedProject=event.previousContainer.data.items[event.previousIndex].id;
-
+        const options: Partial<Confirmation.Options> = {
+            hideYesBtn: true,
+            cancelText: 'Close',
+         
+          };
         if (this.daysSelected.length === 0) {
             this.modalService.open(ComfirmDeleteComponent, { centered: true });
-        } else {
-            const modalRef = this.modalService.open(ModalComponent, { centered: true });
+        } else {        if(this.monthlock===false){
 
+            const modalRef = this.modalService.open(ModalComponent, { centered: true });
             for (let x of this.daysSelected) {
                 for (let y of this.daysful) {
                     if (x === y) {
@@ -145,7 +151,14 @@ this.mindate=new Date('2019-09-06');
 
             //   this.daysSelected=[];
             //               });
-        }
+        }else(
+            
+            this.confirmation
+            .error(
+                '::Month is locked no imports can be created',
+                '::Month is locked',options,
+            ))
+    }
     }
 
     // delete(project:Project){debugger
@@ -194,15 +207,25 @@ this.mindate=new Date('2019-09-06');
     daysSelected: any[] = [];
     event: any;
     selectedProject = '';
-
+date:string;monthlock:boolean;
+dayl:number;
     isSelected = (event: Date) => {
         // if(this.lock){
         // if (event.getDate() == 1){
         // this.lockmonth()}}
         this.daysused();
+        
         let date = this.formatDate(new Date(event));
+        this.date = this.formatDate(new Date(event));
+        this.dayl=event.getDay();
+        if(this.dayl===3){
+            this.MonthService.isMonthClosedByDate(this.date).subscribe(item=>{debugger
+                this.monthlock=item;
+            })
+        }
         this.currentmonth = event.getMonth();
         this.currentyear=event.getFullYear();
+      
         // console.log(this.currentmonth)
         if (this.daysSelected.includes(date)) return 'selected';
         if (this.daysful.includes(date)) return 'full-dates';

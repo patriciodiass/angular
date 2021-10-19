@@ -46,6 +46,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatChipsModule} from '@angular/material/chips';
 
 
 import { PipeComponent } from './pipe/pipe.component';
@@ -63,6 +64,7 @@ import { TagInputModule } from 'ngx-chips';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TagsComponent } from './tags/tags.component';
 import { TagmodalComponent } from './modal/tag-modal/tagmodal/tagmodal.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 
 
@@ -79,8 +81,8 @@ import { TagmodalComponent } from './modal/tag-modal/tagmodal/tagmodal.component
     MatFormFieldModule,MatSidenavModule,
     MatNativeDateModule,MatToolbarModule,
     MatDatepickerModule,MatSelectModule,
-    MatMenuModule,MatIconModule,
-    DragDropModule,
+    MatMenuModule,MatIconModule,MatAutocompleteModule,
+    DragDropModule,MatChipsModule,
     MatTableModule,MatButtonModule,
     OAuthModule.forRoot(),
     MatCardModule, MatSlideToggleModule,

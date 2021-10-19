@@ -35,7 +35,51 @@
                 </mat-select></mat-form-field
             >
         </div></div>
-        
+    <div class="col-3"></div>
+    <div class="col-3">
+        <div class="ititle">Imports by Tag:</div>
+            <mat-form-field appearance="fill" class="type">
+                <mat-label>Select</mat-label>
+                <mat-select disableOptionCentering>
+                    <mat-option
+                        (onSelectionChange)="getimportsbytag(user.id)"
+                        *ngFor="let user of autocompleteItemsAsObjects"
+                        [value]="user.id"
+                    >
+                        {{ user.name }}
+                    </mat-option>
+                </mat-select></mat-form-field
+            >
+        </div>
+        <!-- <div class="ititle">Imports by Tag:</div>
+        <tag-input  [ngModel]="name"  [onlyFromAutocomplete]="true"         
+        >
+            <tag-input-dropdown class="dropd"
+                [showDropdownIfEmpty]="true"
+                [focusFirstElement]="true"
+                [displayBy]="'name'"
+                [identifyBy]="'id'"
+                [autocompleteItems]="autocompleteItemsAsObjects"
+            >
+                <!-- <ng-template let-item="item" let-index="index"                     
+                >
+                    ({{ index }}) {{ item.id }}: {{ item.value }}
+                </ng-template>  -->
+           
+    <!-- <mat-form-field appearance="fill" class="type">
+        <mat-label>Select</mat-label>
+        <mat-select disableOptionCentering>
+            <mat-option
+                (onSelectionChange)="getimportsbyuserbydate(user.id)"
+                *ngFor="let user of users"
+                [value]="user.id"
+            >
+                {{ user.email }}
+            </mat-option>
+        </mat-select></mat-form-field
+    > -->
+</div>
+
 
         <!-- <input type="text" name="search" [(ngModel)]="list.filter"> -->
         <!-- <form novalidate
@@ -52,7 +96,7 @@
               <option value="7">7</option>
             </select>
           </div> </form> -->
-    </div>
+   
     <br />
 
     <ngx-datatable [rows]="items" [count]="count" [list]="list" default>

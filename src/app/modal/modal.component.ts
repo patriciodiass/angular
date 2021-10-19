@@ -15,6 +15,8 @@ import { Observable } from 'rxjs';
 import { of } from 'rxjs';
 import { TagInputModule } from 'ngx-chips';
 import { TagModel } from 'ngx-chips/core/accessor';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 
 export interface AutoCompleteModel {
     value: any;
@@ -30,8 +32,11 @@ export interface AutoCompleteModel {
 export class ModalComponent implements OnInit {
     @Input() data: Project = {} as Project;
     @Input() daata: string = '';
+    readonly separatorKeysCodes = [ENTER, COMMA] as const;
     @Output() Project = new EventEmitter();
-    @Input() imports: Array<ImportDto>;
+    @Input() imports: Array<ImportDto>;  addOnBlur = true;
+    filteredFruits: Observable<string[]>;
+
     autocompleteItemsAsObjects: Array<TagDto> = [];
     newtags: Array<TagDto> = [];
     form: FormGroup = new FormGroup({
@@ -128,6 +133,7 @@ export class ModalComponent implements OnInit {
     // public requestAutocompleteItems = (text: any): Observable<any> => {
     //     return of(this.responseRawGenreList);
     //   };
+selected(event:string){}add(event:string){}
 
     close() {
         this.activeModal.dismiss('Closed success');

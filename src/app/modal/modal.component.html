@@ -71,30 +71,57 @@
                 <mat-form-field appearance="fill" class="type">
                     <mat-label>Select</mat-label>
                     <mat-select formControlName="tagIds" disableOptionCentering  multiple>
-                        <mat-option *ngFor="let user of autocompleteItemsAsObjects" [value]="user.id">
-                            {{ user.name }}
+                        <mat-option *ngFor="let tag of autocompleteItemsAsObjects" [value]="tag.id">
+                            {{ tag.name }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
                 <div class="input-group-append"></div>
             </div>
+            <!-- <mat-form-field class="example-chip-list" appearance="fill">
+                <mat-label>Tags</mat-label>
+                <mat-chip-list #chipList aria-label="selection" formControlName="tagIds">
+                  <mat-chip *ngFor="let fruit of autocompleteItemsAsObjects" [selectable]="selectable"
+                           [removable]="removable" >
+                    {{fruit.name}}
+                    <button matChipRemove *ngIf="removable">
+                      <mat-icon>cancel</mat-icon>
+                    </button>
+                  </mat-chip>
+                  <input placeholder="New Tag..."
+                  #fruitInput
+                  formControlName="tagIds"
+                  [matAutocomplete]="auto"
 
-            <!-- <tag-input  [onlyFromAutocomplete]="true"       formControlName="tagid"       
+                                           [matChipInputFor]="chipList"
+                         [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                         [matChipInputAddOnBlur]="addOnBlur"
+                         (matChipInputTokenEnd)="add($event)">
+                        </mat-chip-list>
+                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                            <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
+                              {{fruit}}
+                            </mat-option>
+                          </mat-autocomplete>
+              </mat-form-field> -->
+            <!-- <tag-input  [onlyFromAutocomplete]="true"       formControlName="tagIds"       
             >
-                <tag-input-dropdown
+                <tag-input-dropdown class="dropd"
                     [showDropdownIfEmpty]="true"
                     [focusFirstElement]="true"
                     [displayBy]="'name'"
                     [identifyBy]="'id'"
                     [autocompleteItems]="autocompleteItemsAsObjects"
-                >
+                > -->
                     <!-- <ng-template let-item="item" let-index="index"                     
                     >
                         ({{ index }}) {{ item.id }}: {{ item.value }}
-                    </ng-template> -->
-                <!-- </tag-input-dropdown>
+                    </ng-template>  -->
+                 <!-- </tag-input-dropdown>
             </tag-input> -->
-            <!-- <tag-input
+
+
+          <!-- <tag-input
                 [(ngModel)]="newtags"
                 [ngModelOptions]="{ standalone: true }"
                 (onAdd)="onAdding($event.value)"

@@ -1,3 +1,4 @@
+import { MonthService } from './../../proxy/months/month.service';
 import { UserDto } from './../../proxy/users/models';
 import { UserService } from './../../proxy/users/user.service';
 import { ProjectDto } from './../../proxy/projects/models';
@@ -27,12 +28,15 @@ export class AdmincalendarComponent implements OnInit {
     users = { items: [], totalCount: 0 } as PagedResultDto<UserDto>;
     // import= { items: [], totalCount: 0 } as PagedResultDto<ImportDto>;
     imports = [] as Array<ImportDto>;
+    import:any=[];
     allimports = [] as Array<ImportDto>;
     totalhours = 0;
     useddays: Array<string> = [];
     daysful: Array<string> = [];
     daysoverfilled: Array<string> = [];
     dayu: Array<string> = [];
+    daylocked: Array<string> = [];
+
     arr = 'import.listofdays';
     inputdays: Array<any> = [];
     // projectbyusers:Array<Project>=[];
@@ -45,6 +49,7 @@ export class AdmincalendarComponent implements OnInit {
     daysSelected: any[] = [];
     date: string;
     lock: boolean;
+    monthlock:boolean;
     @ViewChild(MatCalendar) calendar: MatCalendar<Date>;
 
     constructor(private cdRef:ChangeDetectorRef,
@@ -54,7 +59,8 @@ export class AdmincalendarComponent implements OnInit {
         private confirmation: ConfirmationService,
         private ImportService: ImportService,
         private ProjectService: ProjectService,
-        private UserService: UserService
+        private UserService: UserService,
+        private MonthService:MonthService,
     ) {}
 
     ngOnInit(): void {
@@ -76,10 +82,27 @@ export class AdmincalendarComponent implements OnInit {
         this.daysused();
         this.isDataLoaded = true;
     }
+    dayl:number;
     isSelected = (event: Date) => {
         this.daysused();
+        this.dayl=event.getDay();
         let date = this.formatDate(new Date(event));
         this.date = this.formatDate(new Date(event));
+    //     for(let x of this.dayu){
+    //         this.daylocked.push(this.formatDate(new Date(x)))
+    //     }
+    //     this.ImportService.getAllListByDayBySelectedDays(this.daylocked).subscribe(importa => {
+            
+    //     for(let x of importa){debugger
+    //     if(x.isClosed===true){
+    //         this.monthlock=true;
+    //     }}
+    // })
+    if(this.dayl===3){
+        this.MonthService.isMonthClosedByDate(this.date).subscribe(item=>{debugger
+            this.monthlock=item;
+        })
+    }
 
         this.currentmonth = event.getMonth();
         this.currentyear = event.getFullYear();
@@ -177,13 +200,21 @@ export class AdmincalendarComponent implements OnInit {
             else return true;
         }
     }
-
     g: Date;
     lockmonth() {
-        debugger;
-        // this.ImportService.importsOfAllUsersByMonthByDateTimeAndLock(this.date).subscribe;
+        // this.ImportService.getAllListByDayBySelectedDays(this.date)
+        // debugger;
+        // this.ImportService.lockOrUnlockAllImportsByDateTimeAndLock(this.date,true)
+        this.MonthService.closeMonthByDate(this.date).subscribe(importa => {debugger})
+        this.monthlock=true;
+        this.ImportService.lockOrUnlockAllImportsByDateTimeAndLock(this.date,true).subscribe();
 
-        // // this.ImportService.closeImportsOfAllUsersByMonthByDateTime('1-this.currentmonth-this.currentyear');
-        // debugger
+    }
+    unlockmonth(){
+        this.MonthService.openMonthByDate(this.date).subscribe()
+        this.monthlock=false;
+        this.ImportService.lockOrUnlockAllImportsByDateTimeAndLock(this.date,false).subscribe();
+
+
     }
 }

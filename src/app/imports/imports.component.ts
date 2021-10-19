@@ -1,3 +1,4 @@
+import { TagDto, TagService } from '@proxy/tags';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { UserService } from './../proxy/users/user.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -13,6 +14,8 @@ import * as _moment from 'moment';
 import { Moment} from 'moment';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { TagModel } from 'ngx-chips/core/accessor';
+import { Observable } from 'rxjs';
 const moment =  _moment;
 
 export const MY_FORMATS = {
@@ -48,16 +51,19 @@ export class ImportsComponent implements OnInit {    users = [] as Array<UserDto
     @ViewChild(MatDatepicker) private rangePicker: MatDatepicker<Date>;
     items: ImportDto[] = [];
     userss: UserDto[]=[];
+    name:Array<string>=[]
     count = 0;
     countusers=0;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
     allimports = [] as Array<ImportDto>;
-    
+    autocompleteItemsAsObjects: Array<TagDto> = [];
+
   constructor(        
     public readonly list: ListService,
     private ImportService: ImportService,
     private UserService:UserService,
+    private TagService:TagService,
   ) {    this.list.maxResultCount = 20;
   }
 
@@ -86,6 +92,11 @@ debugger
         this.userss = response.items;debugger
         this.countusers = response.totalCount;
     })
+    this.TagService.getTagsList().subscribe(imports => {
+        debugger;
+
+        this.autocompleteItemsAsObjects = imports;
+    });
       }
  
 
@@ -117,6 +128,7 @@ getimportsbymonth(event: any){debugger
     })
     
 }
+
 formatDate(date: Date): string {
     this.month=date.getMonth() + 1
 
@@ -129,5 +141,12 @@ formatDate(date: Date): string {
         
     );
 }
-
+getimportsbytag(id:string){
+this.ImportService.getListByTagByTagId(id).subscribe(imports=>{
+    this.items=imports;
+    this.count=imports.length;
+})
+}
+// add($event: string){debugger
+// console.log(event)}
 }

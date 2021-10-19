@@ -1,18 +1,26 @@
 <!-- <div *ngIf="isDataLoaded"> -->
-<br>
+<br />
 <div class="row">
     <div class="col-4">
         <div class="calendarcl">
             <br /><br />
             <div *ngIf="lock">
-            <button type="button" class="btn btn-danger" (click)="lockmonth()">
-                <i class="fa fa-lock"></i> Lock month
-            </button></div>
+                <div *ngIf="monthlock === false">
+                    <button type="button" class="btn btn-danger" (click)="lockmonth()">
+                        <i class="fa fa-lock"></i> Lock Month
+                    </button>
+                </div>
+
+                <div *ngIf="monthlock === true">
+                    <button type="button" class="btn btn-danger" (click)="unlockmonth()">
+                        <i class="fa fa-unlock"></i> Unlock Month
+                    </button>
+                </div>
+            </div>
             <mat-card class="demo-inline-calendar-card">
                 <mat-calendar
-                [dateFilter]="lockm" 
-
-                [maxDate]="today"
+                    [dateFilter]="lockm"
+                    [maxDate]="today"
                     class="container"
                     fxLayout="row"
                     fxLayout.xs="column"
@@ -29,55 +37,54 @@
     </div>
 
     <div class="col-8">
-        <div  *ngIf="daysSelected.length===1">
+        <div *ngIf="daysSelected.length === 1">
             <h2 class="imports">Imports of the selected day by project</h2>
         </div>
-        <div *ngIf="daysSelected.length>1">
+        <div *ngIf="daysSelected.length > 1">
             <h2 class="imports">Imports of the selected days by project</h2>
         </div>
-        <div  *ngIf="daysSelected.length===0">
-          <h2  class="imports">  Please select a day to see its imports</h2>
+        <div *ngIf="daysSelected.length === 0">
+            <h2 class="imports">Please select a day to see its imports</h2>
         </div>
-        <mat-accordion
-            >
-<!--             
+        <mat-accordion>
+            <!--             
             <div *ngFor="let project of project"> -->
-                <div *ngFor="let usedproject of usedprojects">
+            <div *ngFor="let usedproject of usedprojects">
                 <mat-expansion-panel hideToggle>
-                 <!-- disabled=disableprojects(project.name)> -->
+                    <!-- disabled=disableprojects(project.name)> -->
 
                     <mat-expansion-panel-header>
-                <div *ngFor="let item of project">
-
-                         <div *ngIf="usedproject===item.name" > 
-                        <mat-panel-title> {{ item.name }} </mat-panel-title>
-                        <mat-panel-description>
-                            {{ item.description }}
-                        </mat-panel-description>
-                    </div></div>
+                        <div *ngFor="let item of project">
+                            <div *ngIf="usedproject === item.name">
+                                <mat-panel-title> {{ item.name }} </mat-panel-title>
+                                <mat-panel-description> {{ item.description }}</mat-panel-description>
+                            </div>
+                        </div>
                     </mat-expansion-panel-header>
-                    <mat-grid-list rowHeight="2:1" cols="2" >
+                    <mat-grid-list rowHeight="2:1" cols="2">
                         <!-- <div *ngIf="project.name===import.projectName">    </div>  -->
-                      <div *ngFor="let import of imports">
-                        <mat-grid-tile *ngIf="usedproject === import.projectName">
-                            <mat-card class="cardss">
-                                <mat-card-title
-                                    style="color: white; text-align: center; font-size: 15px"
-                                    >{{ import.observations }}</mat-card-title>
-                                <mat-card-content style="color: rgb(204, 204, 175)"
-                                    ><ng-container *ngFor="let date of import.listOfDays"
-                                        >|{{ date | date: 'dd/MM/yyyy' }}|</ng-container
-                                    >{{import.user}}
-                                </mat-card-content>
-                            </mat-card>
-                        </mat-grid-tile></div>
+                        <div *ngFor="let import of imports">
+                            <mat-grid-tile *ngIf="usedproject === import.projectName">
+                                <mat-card class="cardss">
+                                    <mat-card-title
+                                        style="color: white; text-align: center; font-size: 15px"
+                                        >{{ import.observations }}</mat-card-title
+                                    >
+                                    <mat-card-content style="color: rgb(204, 204, 175)"
+                                        ><ng-container *ngFor="let date of import.listOfDays"
+                                            >|{{ date | date: 'dd/MM/yyyy' }}|</ng-container
+                                        >{{ import.user }}
+                                    </mat-card-content>
+                                </mat-card>
+                            </mat-grid-tile>
+                        </div>
                     </mat-grid-list>
                 </mat-expansion-panel>
             </div>
-      
         </mat-accordion>
-    </div>  </div>
-    <!-- <div class="col-8">
+    </div>
+</div>
+<!-- <div class="col-8">
         <div  *ngIf="daysSelected.length===1">
             <h2 class="imports">Imports of the selected day by project</h2>
         </div>
@@ -98,7 +105,7 @@
                     </mat-expansion-panel-header>
                     <mat-grid-list rowHeight="2:1" cols="2" >
                         <!-- <div *ngIf="project.name===import.projectName">    </div> -->
-                        <!-- <mat-grid-tile *ngIf="project.name === import.projectName">
+<!-- <mat-grid-tile *ngIf="project.name === import.projectName">
                             <mat-card class="cardss">
                                 <mat-card-title
                                     style="color: white; text-align: center; font-size: 15px"
@@ -114,5 +121,4 @@
                 </mat-expansion-panel>
             </div>
         </mat-accordion>
-    </div>  --> 
-    
+    </div>  -->

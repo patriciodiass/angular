@@ -55,7 +55,7 @@ selecteduser:string;
             this.ImportService.getAllImports().subscribe(importa => {
                 ;
                 this.allimports = importa;
-                for (let x of this.allimports) {
+                for (let x of this.allimports) {debugger
                     if (x.projectId === this.project.id) {
                         this.selectimports.push(x);
                     }
