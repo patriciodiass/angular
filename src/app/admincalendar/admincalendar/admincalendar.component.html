@@ -1,4 +1,5 @@
 <!-- <div *ngIf="isDataLoaded"> -->
+    <!-- style="position: relative;top:40px;left:10px; z-index: 10;"  -->
 <br />
 <div class="row">
     <div class="col-4">
@@ -49,31 +50,43 @@
         <mat-accordion>
             <!--             
             <div *ngFor="let project of project"> -->
-            <div *ngFor="let usedproject of usedprojects">
+            <div *ngFor="let usedproject of usedprojects" style="display: inline">
                 <mat-expansion-panel hideToggle>
                     <!-- disabled=disableprojects(project.name)> -->
 
                     <mat-expansion-panel-header>
-                        <div *ngFor="let item of project">
-                            <div *ngIf="usedproject === item.name">
-                                <mat-panel-title> {{ item.name }} </mat-panel-title>
-                                <mat-panel-description> {{ item.description }}</mat-panel-description>
+                        <div *ngFor="let item of project" class="desc" style="display: inline">
+                            <div
+                                *ngIf="usedproject === item.id"
+                                class="desc"
+                                style="display: inline"
+                            >
+                                <mat-panel-title style="display: inline">
+                                    {{ item.name }}
+                                </mat-panel-title>
+                                <mat-panel-description style="display: inline">
+                                    {{          item.description }}</mat-panel-description
+                                >
                             </div>
                         </div>
                     </mat-expansion-panel-header>
-                    <mat-grid-list rowHeight="2:1" cols="2">
+                    <mat-grid-list rowHeight="220px" cols="2">
                         <!-- <div *ngIf="project.name===import.projectName">    </div>  -->
                         <div *ngFor="let import of imports">
-                            <mat-grid-tile *ngIf="usedproject === import.projectName">
+                            <mat-grid-tile *ngIf="usedproject === import.projectId">
                                 <mat-card class="cardss">
                                     <mat-card-title
                                         style="color: white; text-align: center; font-size: 15px"
-                                        >{{ import.observations }}</mat-card-title
+                                        >{{ import.observations }}
+                                        </mat-card-title
                                     >
                                     <mat-card-content style="color: rgb(204, 204, 175)"
                                         ><ng-container *ngFor="let date of import.listOfDays"
-                                            >|{{ date | date: 'dd/MM/yyyy' }}|</ng-container
-                                        >{{ import.user }}
+                                            >{{ date | date: 'dd/MM/yyyy' }}
+                                        </ng-container>        <div> {{import.hoursSpent}} Hour/s</div>
+                                        <div class="names">
+                                       <h3 style="display: inline">  {{ import.userName }} {{ import.userSurname }}</h3>
+                                        </div>
                                     </mat-card-content>
                                 </mat-card>
                             </mat-grid-tile>

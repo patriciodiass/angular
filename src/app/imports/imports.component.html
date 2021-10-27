@@ -6,46 +6,46 @@
     </div>
     <div class="row">
         <div class="col-3" style="height: 60px">
-        <div class="title">Imports by month:{{this.month}}</div>
-        <mat-form-field appearance="fill">
-            <mat-label>Choose a month</mat-label>
-            <input matInput [matDatepicker]="picker" />
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker
-                (monthSelected)="getimportsbymonth($event)"
-                close
-                startView="year"
-                #picker
-            ></mat-datepicker>
-        </mat-form-field>
-    </div>
-        
-        <div class="col-3" style="height: 60px"><div *ngIf="this.date">
-            <div class="ititle">Imports by user:</div>
+            <div class="title">Imports by month:{{ this.month }}</div>
+            <mat-form-field appearance="fill">
+                <mat-label>Choose a month</mat-label>
+                <input matInput [matDatepicker]="picker" />
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker
+                    (monthSelected)="getimportsbymonth($event)"
+                    close
+                    startView="year"
+                    #picker
+                ></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <div class="col-3" style="height: 60px">
+            <div *ngIf="this.date">
+                <div class="title">Imports by month and user:</div>
+                <mat-form-field appearance="fill" class="type">
+                    <mat-label>Select</mat-label>
+                    <mat-select
+                        disableOptionCentering
+                        (selectionChange)="getimportsbyuserbydate($event.value)"
+                    >
+                        <mat-option *ngFor="let user of users" [value]="user.id">
+                            {{ user.userName }}
+                        </mat-option>
+                    </mat-select></mat-form-field
+                >
+            </div>
+        </div>
+        <div class="col-3"></div>
+        <div  class="col-3 ">
+            <div class="title">Imports by Tag:</div>
             <mat-form-field appearance="fill" class="type">
                 <mat-label>Select</mat-label>
-                <mat-select disableOptionCentering>
-                    <mat-option
-                        (onSelectionChange)="getimportsbyuserbydate(user.id)"
-                        *ngFor="let user of users"
-                        [value]="user.id"
-                    >
-                        {{ user.email }}
-                    </mat-option>
-                </mat-select></mat-form-field
-            >
-        </div></div>
-    <div class="col-3"></div>
-    <div class="col-3">
-        <div class="ititle">Imports by Tag:</div>
-            <mat-form-field appearance="fill" class="type">
-                <mat-label>Select</mat-label>
-                <mat-select disableOptionCentering>
-                    <mat-option
-                        (onSelectionChange)="getimportsbytag(user.id)"
-                        *ngFor="let user of autocompleteItemsAsObjects"
-                        [value]="user.id"
-                    >
+                <mat-select
+                    disableOptionCentering
+                    (selectionChange)="getimportsbytag($event.value)"
+                >
+                    <mat-option *ngFor="let user of autocompleteItemsAsObjects" [value]="user.id">
                         {{ user.name }}
                     </mat-option>
                 </mat-select></mat-form-field
@@ -65,8 +65,8 @@
                 >
                     ({{ index }}) {{ item.id }}: {{ item.value }}
                 </ng-template>  -->
-           
-    <!-- <mat-form-field appearance="fill" class="type">
+
+        <!-- <mat-form-field appearance="fill" class="type">
         <mat-label>Select</mat-label>
         <mat-select disableOptionCentering>
             <mat-option
@@ -78,11 +78,10 @@
             </mat-option>
         </mat-select></mat-form-field
     > -->
-</div>
+    </div>
 
-
-        <!-- <input type="text" name="search" [(ngModel)]="list.filter"> -->
-        <!-- <form novalidate
+    <!-- <input type="text" name="search" [(ngModel)]="list.filter"> -->
+    <!-- <form novalidate
         #form="ngForm">
         <div class="form-group">
             <strong>hours</strong>
@@ -96,7 +95,7 @@
               <option value="7">7</option>
             </select>
           </div> </form> -->
-   
+
     <br />
 
     <ngx-datatable [rows]="items" [count]="count" [list]="list" default>
@@ -109,15 +108,14 @@
         </ngx-datatable-column>
         <ngx-datatable-column [name]="'::Exterior' | abpLocalization" prop="exterior">
             <ng-template let-row="row" ngx-datatable-cell-template>
-                <div *ngIf="row.exterior===false"><i class="fa fa-close"></i></div>
-                <div *ngIf="row.exterior===true"><i class="fas fa-check"></i></div>
-              
+                <div *ngIf="row.exterior === false"><i class="fa fa-close"></i></div>
+                <div *ngIf="row.exterior === true"><i class="fas fa-check"></i></div>
             </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column [name]="'::Training' | abpLocalization" prop="training">
             <ng-template let-row="row" ngx-datatable-cell-template>
-               <div *ngIf="row.training===false"><i class="fa fa-close"></i></div>
-               <div *ngIf="row.training===true"><i class="fas fa-check"></i></div>
+                <div *ngIf="row.training === false"><i class="fa fa-close"></i></div>
+                <div *ngIf="row.training === true"><i class="fas fa-check"></i></div>
             </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column [name]="'::Hours Spent' | abpLocalization" prop="hoursSpent">

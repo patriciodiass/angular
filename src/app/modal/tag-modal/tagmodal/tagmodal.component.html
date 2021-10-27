@@ -1,8 +1,19 @@
 
-    <div class="modal-header">
+<ng-container *ngIf="this.data.name; then update; else newp">
+</ng-container>
+<ng-template #newp>
+<div class="modal-header">
      <h2 class="title">   Create New Tag</h2>
       </div>
- 
+    </ng-template>    
+    
+    <ng-template #update>
+<div class="modal-header">
+        <h2 class="title">   Edit Tag</h2> <button type="button" class="btn btn-danger" style="position:relative; top:5px" (click)="delete(id)">
+            <i class="fa fa-trash"></i> delete
+        </button>  
+         </div>
+       </ng-template>    
 
       <div class="modal-body">
           <form [formGroup]="form" >
@@ -26,6 +37,12 @@
       <div class="modal-footer"> 
           <button type="button" class="btn btn-danger" (click)="close()"><i class="fa fa-close"></i>  Cancel</button>
         
+          <ng-container *ngIf="this.data.name; then updateb; else newpb">
+        </ng-container>
+          <ng-template #updateb>
+            <button type="button" class="btn btn-success"  
+            (click)="updatetag()"><i class="fa fa-folder"></i>  Edit</button>
+        </ng-template>
+          <ng-template #newpb>
             <button type="button" class="btn btn-success"  (click)="save()"><i class="fa fa-folder"></i>  Save</button>
-          </div>
-   
+        </ng-template>  </div>

@@ -21,23 +21,23 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     templateUrl: './calendar.component.html',
     styleUrls: ['./calendar.component.scss'],
     providers: [ListService],
-    encapsulation: ViewEncapsulation.None,
+    encapsulation: ViewEncapsulation.Emulated,
 })
 export class CalendarComponent implements OnInit {
     saturday = 6;
     currentmonth: number;
-    currentyear:number;
+    currentyear: number;
     project = [] as Array<ProjectDto>;
     users = { items: [], totalCount: 0 } as PagedResultDto<UserDto>;
     // import= { items: [], totalCount: 0 } as PagedResultDto<ImportDto>;
     imports = [] as Array<ImportDto>;
     allimports = [] as Array<ImportDto>;
     today = new Date();
-    mindate=new Date();
+    mindate = new Date();
     n: Date;
     @ViewChild(MatCalendar) calendar: MatCalendar<Date>;
 
-    // import:{};
+    // import:{};da
     totalhours = 0;
     useddays: Array<string> = [];
     daysful: Array<string> = [];
@@ -59,20 +59,20 @@ export class CalendarComponent implements OnInit {
         private ImportService: ImportService,
         private ProjectService: ProjectService,
         private UserService: UserService,
-        private MonthService:MonthService,
+        private MonthService: MonthService
     ) {}
 
-    ngOnInit() {     
-               this.lock = false;
-this.mindate=new Date('2019-09-06');
+    ngOnInit() {
+        this.lock = false;
+        this.mindate = new Date('2019-09-06');
         this.isDataLoaded = false;
         debugger;
         this.load();
         console.log(this.daysSelected);
-        this.today.setDate(this.today.getDate() );
+        this.today.setDate(this.today.getDate());
         this.n = new Date('2021-09-06');
     }
-    
+
     load() {
         this.ProjectService.getMyProjects().subscribe(projects => {
             this.project = projects;
@@ -85,41 +85,110 @@ this.mindate=new Date('2019-09-06');
         this.daysused();
         this.isDataLoaded = true;
     }
-
+    onEvent(event) {
+        event.stopPropagation();
+    }
     open(event: CdkDragDrop<PagedResultDto<ProjectDto>>) {
         //this.selectedProject=event.previousContainer.data.items[event.previousIndex].id;
         const options: Partial<Confirmation.Options> = {
             hideYesBtn: true,
             cancelText: 'Close',
-         
-          };
+        };
         if (this.daysSelected.length === 0) {
-            this.modalService.open(ComfirmDeleteComponent, { centered: true });
-        } else {        if(this.monthlock===false){
-
-            const modalRef = this.modalService.open(ModalComponent, { centered: true });
-            for (let x of this.daysSelected) {
-                for (let y of this.daysful) {
-                    if (x === y) {
-                        this.confirmation
-                            .warn(
-                                '::One or more selected days are full.Continue anyways?',
-                                '::Day alredy full'
-                            )
-                            .subscribe(status => {
-                                if (status === Confirmation.Status.reject) {
-                                    modalRef.close();
-                                }
-                            });
+            // this.modalService.open(ComfirmDeleteComponent, { centered: true });
+            this.confirmation.error(
+                '::Please select a day before creating imports',
+                '::Select a day',
+                options
+            );
+        } else {
+            if (this.monthlock === false) {
+                const modalRef = this.modalService.open(ModalComponent, { centered: true });
+                for (let x of this.daysSelected) {
+                    for (let y of this.daysful) {
+                        for (let t of this.daysoverfilled) {
+                            if (x === y || x === t) {
+                                this.confirmation
+                                    .warn(
+                                        '::One or more selected days are full.Continue anyways?',
+                                        '::Day alredy full'
+                                    )
+                                    .subscribe(status => {
+                                        if (status === Confirmation.Status.reject) {
+                                            modalRef.close();
+                                        }
+                                    });
+                            }
+                        }
                     }
                 }
-            }
-            modalRef.componentInstance.data.listofdays = this.daysSelected;
-            modalRef.componentInstance.data.imports = this.imports;
-            modalRef.componentInstance.data.nameproject =
-                event.previousContainer.data[event.previousIndex].name;
-            modalRef.componentInstance.data.id =
-                event.previousContainer.data[event.previousIndex].id;
+                modalRef.componentInstance.edit = false;
+
+                modalRef.componentInstance.data.listofdays = this.daysSelected;
+                modalRef.componentInstance.data.imports = this.imports;
+                modalRef.componentInstance.data.nameproject =
+                    event.previousContainer.data[event.previousIndex].name;
+                modalRef.componentInstance.data.id =
+                    event.previousContainer.data[event.previousIndex].id;
+                modalRef.result.then(
+                    result => {},
+                    reason => {
+                        console.log(`Closed with: ${reason}`);
+                        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+                        this.ImportService.getListByDayBySelectedDays(this.daysSelected).subscribe(
+                            importa => {
+                                this.imports = importa;
+                            }
+                        );
+                        debugger;
+                        // this.daysSelected=[];
+                        this.daysused();
+                        debugger;
+                        // this.isSelected
+                    }
+                );
+
+                //         modalRef.componentInstance.Project.subscribe(x=>{
+                //             this.daysSelected.forEach(day=>{
+                //             //  this.inputdays.push({'day':day,...x})
+                //             // this.import.items.push({'listOfDays':day,...x})
+                //         //  this.days.push({'listOfDays':day,...x})
+                //             })
+                //             // modalRef.componentInstance.data.listOfDays =this.days;
+                //         // console.log(this.import)
+                //         console.log(this.project)
+                // debugger
+
+                //   this.daysSelected=[];
+                //               });
+            } else
+                this.confirmation.error(
+                    '::Month is locked no imports can be created',
+                    '::Month is locked',
+                    options
+                );
+        }
+    }
+    openedit(
+        id: string,
+        exterior: boolean,
+        project: string,
+        hours: number,
+        training: boolean,
+        observations: string,
+        listofdays: Array<string>
+    ) {
+        debugger;
+        if (this.monthlock === false) {
+            const modalRef = this.modalService.open(ModalComponent,{ size:'lg',centered:true});
+            modalRef.componentInstance.data.id = id;
+            modalRef.componentInstance.data.external = exterior;
+            modalRef.componentInstance.data.nameproject = project;
+            modalRef.componentInstance.data.hours = hours;
+            modalRef.componentInstance.data.training = training;
+            modalRef.componentInstance.data.observation = observations;
+            modalRef.componentInstance.data.listofdays = listofdays;
+            modalRef.componentInstance.edit = true;
             modalRef.result.then(
                 result => {},
                 reason => {
@@ -130,37 +199,11 @@ this.mindate=new Date('2019-09-06');
                             this.imports = importa;
                         }
                     );
-                    debugger;
-                    // this.daysSelected=[];
-                    this.daysused();
-                    debugger;
-                    // this.isSelected
                 }
             );
-
-            //         modalRef.componentInstance.Project.subscribe(x=>{
-            //             this.daysSelected.forEach(day=>{
-            //             //  this.inputdays.push({'day':day,...x})
-            //             // this.import.items.push({'listOfDays':day,...x})
-            //         //  this.days.push({'listOfDays':day,...x})
-            //             })
-            //             // modalRef.componentInstance.data.listOfDays =this.days;
-            //         // console.log(this.import)
-            //         console.log(this.project)
-            // debugger
-
-            //   this.daysSelected=[];
-            //               });
-        }else(
-            
-            this.confirmation
-            .error(
-                '::Month is locked no imports can be created',
-                '::Month is locked',options,
-            ))
+            this.daysused();
+        }
     }
-    }
-
     // delete(project:Project){debugger
     //     const modalRef = this.modalService.open(ComfirmDeleteComponent)
     //     modalRef.componentInstance.data = project;
@@ -205,33 +248,37 @@ this.mindate=new Date('2019-09-06');
 
     nameproject = '';
     daysSelected: any[] = [];
+    days: any[] = [];
+
     event: any;
     selectedProject = '';
-date:string;monthlock:boolean;
-dayl:number;
+    date: string;
+    monthlock: boolean;
+    dayl: number;
     isSelected = (event: Date) => {
         // if(this.lock){
         // if (event.getDate() == 1){
         // this.lockmonth()}}
         this.daysused();
-        
+
         let date = this.formatDate(new Date(event));
         this.date = this.formatDate(new Date(event));
-        this.dayl=event.getDay();
-        if(this.dayl===3){
-            this.MonthService.isMonthClosedByDate(this.date).subscribe(item=>{debugger
-                this.monthlock=item;
-            })
+        this.dayl = event.getDay();
+        if (this.dayl === 3) {
+            this.MonthService.isMonthClosedByDate(this.date).subscribe(item => {
+                debugger;
+                this.monthlock = item;
+            });
         }
         this.currentmonth = event.getMonth();
-        this.currentyear=event.getFullYear();
-      
+        this.currentyear = event.getFullYear();
+
         // console.log(this.currentmonth)
         if (this.daysSelected.includes(date)) return 'selected';
         if (this.daysful.includes(date)) return 'full-dates';
         if (this.useddays.includes(date)) return 'used-date';
-        if (this.daysoverfilled.includes(date)) return 'overfilled-date';
-
+        if (this.daysoverfilled.includes(date)) return 'fulldate';
+        // console.log(this.daysoverfilled);
         // this.calendar.updateTodaysDate();
 
         // if(this.daysful){debugger
@@ -273,6 +320,7 @@ dayl:number;
         this.useddays = [];
         this.daysful = [];
         this.dayu = [];
+        this.daysoverfilled = [];
         this.ImportService.getMyImports().subscribe(importa => {
             this.allimports = importa;
         });
@@ -295,6 +343,7 @@ dayl:number;
                     ? this.daysful.push(this.formatDate(new Date(x)))
                     : {};
             } else if (this.totalhours > 8) {
+                debugger;
                 this.daysoverfilled.indexOf(this.formatDate(new Date(x))) === -1
                     ? this.daysoverfilled.push(this.formatDate(new Date(x)))
                     : {};
@@ -316,21 +365,19 @@ dayl:number;
     }
 
     lockm = (d: Date): boolean => {
-        if (this.lock===true) {
-             debugger
-            this.mindate=new Date(1-(this.currentmonth+1)-(this.currentyear))
-            
-        }else return d.getDay() !== 0 && d.getDay() !== 6;
-            // d.getDay() !== 0 &&
-                // d.getDay() !== 6 &&
-                // d.getDay() !== 5 &&
-                // d.getDay() !== 4 &&
-                // d.getDay() !== 3 &&
-                // d.getDay() !== 2 &&
-                // d.getDay() !== 1
-            
-            // return d.getMonth() !== this.currentmonth;
-        
+        if (this.lock === true) {
+            debugger;
+            this.mindate = new Date(1 - (this.currentmonth + 1) - this.currentyear);
+        } else return d.getDay() !== 0 && d.getDay() !== 6;
+        // d.getDay() !== 0 &&
+        // d.getDay() !== 6 &&
+        // d.getDay() !== 5 &&
+        // d.getDay() !== 4 &&
+        // d.getDay() !== 3 &&
+        // d.getDay() !== 2 &&
+        // d.getDay() !== 1
+
+        // return d.getMonth() !== this.currentmonth;
     };
     u: number;
     lock: boolean;
@@ -347,21 +394,39 @@ dayl:number;
 
     select(event: any) {
         let date = this.formatDate(event);
-
-        const index = this.daysSelected.findIndex(x => x == date);
-
-        if (index < 0) this.daysSelected.push(date);
-        else this.daysSelected.splice(index, 1);
-        this.calendar.updateTodaysDate();
-        this.cdr.detectChanges();
-        debugger;
-        this.ImportService.getListByDayBySelectedDays(this.daysSelected).subscribe(importa => {
-            this.imports = importa;
-            this.daysused();debugger
+        let dates= new Date(event);
+        this.MonthService.isMonthClosedByDate(this.date).subscribe(item => {
+            debugger;
+            this.monthlock = item;
         });
+        if (this.monthlock) {
+            const options: Partial<Confirmation.Options> = {
+                hideYesBtn: true,
+                cancelText: 'Close',
+            };
+            this.confirmation.error(
+                '::Month has been closed please select a diferent day',
+                '::Month Closed',
+                options
+            );
+        } else {
+            const index = this.daysSelected.findIndex(x => x == date);
+            if (index < 0) this.daysSelected.push(date);
+            else this.daysSelected.splice(index, 1);
+            const indexe = this.days.findIndex(x => x == dates);
+            if (indexe < 0) this.days.push(dates);
+            else this.days.splice(indexe, 1);debugger
+            this.calendar.updateTodaysDate();
+            this.cdr.detectChanges();
+            debugger;
+            this.ImportService.getListByDayBySelectedDays(this.daysSelected).subscribe(importa => {
+                this.imports = importa;
+                this.daysused();
+                debugger;
+            });
+        }
     }
-
-    formatDate(date: Date): string {
+    formatDate(date: Date): string {debugger
         return (
             date.getFullYear() +
             '-' +

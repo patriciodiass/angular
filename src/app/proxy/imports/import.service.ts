@@ -115,15 +115,15 @@ export class ImportService {
     },
     { apiName: this.apiName });
 
-  lockOrUnlockAllImportsByDateTimeAndLock = (dateTime: string, lock: boolean) =>
+  lockOrUnlockAllImportsByMonthByDateAndLock = (date: string, lock: boolean) =>
     this.restService.request<any, void>({
       method: 'POST',
-      url: '/api/app/import/lock-or-unlock-all-imports',
-      params: { dateTime, lock },
+      url: '/api/app/import/lock-or-unlock-all-imports-by-month',
+      params: { date, lock },
     },
     { apiName: this.apiName });
 
-  lockOrUnlockSelectedImportsByListOfDaysAndListOfImportsAndLock = (listOfDays: string[], listOfImports: ImportDto[], lock: boolean) =>
+  lockOrUnlockSelectedImportsByListOfImportsAndLock = (listOfImports: ImportDto[], lock: boolean) =>
     this.restService.request<any, void>({
       method: 'POST',
       url: '/api/app/import/lock-or-unlock-selected-imports',

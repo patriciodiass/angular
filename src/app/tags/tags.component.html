@@ -1,12 +1,15 @@
 <div class="row">
-    <div class="col-lg">
+    <div class="col-10" style="height: 60px;">
         <h1 class="title">Tags</h1>     
 
     </div>
+    <div class="col-2">
+        <button mat-raised-button  color="primary" class="button float-right w-100 h-100" (click)="newtag()" >
+            <mat-icon>add</mat-icon>New Tag</button>
+    </div>
 </div>
 <div class="col" style="height: 60px;position: relative;left: 15px;">
-    <button mat-raised-button  color="primary" class="button float-right h-100" (click)="newtag()" >
-        <mat-icon>add</mat-icon>New Tag</button>
+ 
 </div>
 <div *ngIf="this.dataSource.length>0">
 <div class="row">
@@ -22,7 +25,8 @@
        
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row  *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-row                 (click)="edittag(row)"
+        *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
 </div>
 </div>

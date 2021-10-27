@@ -51,4 +51,20 @@ export class TagsComponent implements OnInit {
         //     debugger;
         // });
     }
+    edittag(row){console.log(row)
+        const modalRef = this.modalService.open(TagmodalComponent, { centered: true });
+        modalRef.componentInstance.data.name = row.name;
+        modalRef.componentInstance.id = row.id;
+        modalRef.result.then(
+            result => {},
+            reason => {
+                console.log(`Closed with: ${reason}`);
+                this.TagService.getTagsList().subscribe(projects => {
+                    this.tags = projects;
+                    this.dataSource = this.tags;
+                });
+            }
+        );
+    }
+    
 }

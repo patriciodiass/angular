@@ -18,7 +18,7 @@ import { ImportService, ImportDto } from '@proxy/imports';
     templateUrl: './admincalendar.component.html',
     styleUrls: ['./admincalendar.component.scss'],
     providers: [ListService],
-    encapsulation: ViewEncapsulation.None,
+    encapsulation: ViewEncapsulation.Emulated
 })
 export class AdmincalendarComponent implements OnInit {
     today = new Date();
@@ -71,7 +71,7 @@ export class AdmincalendarComponent implements OnInit {
         this.load();
     }
     load() {
-        this.ProjectService.getMyProjects().subscribe(projects => {
+        this.ProjectService.getMyProjects().subscribe(projects => {debugger
             this.project = projects;
         });
         this.ImportService.getAllImports().subscribe(importa => {
@@ -98,7 +98,7 @@ export class AdmincalendarComponent implements OnInit {
     //         this.monthlock=true;
     //     }}
     // })
-    if(this.dayl===3){
+    if(this.dayl===1){
         this.MonthService.isMonthClosedByDate(this.date).subscribe(item=>{debugger
             this.monthlock=item;
         })
@@ -114,7 +114,7 @@ export class AdmincalendarComponent implements OnInit {
         if (this.daysSelected.includes(date)) return 'selected';
         if (this.daysful.includes(date)) return 'full-dates';
         if (this.useddays.includes(date)) return 'used-date';
-        if (this.daysoverfilled.includes(date)) return 'overfilled-date';
+        if (this.daysoverfilled.includes(date)) return 'fulldate';
     };
 
     daysused() {
@@ -169,8 +169,8 @@ export class AdmincalendarComponent implements OnInit {
             this.daysused();
             console.log(this.imports);
             for (let x of this.imports) {
-                this.usedprojects.indexOf(x.projectName) === -1
-                    ? this.usedprojects.push(x.projectName)
+                this.usedprojects.indexOf(x.projectId) === -1
+                    ? this.usedprojects.push(x.projectId)
                     : {};
                 debugger;
             }
@@ -201,19 +201,19 @@ export class AdmincalendarComponent implements OnInit {
         }
     }
     g: Date;
-    lockmonth() {
+    lockmonth() {debugger
         // this.ImportService.getAllListByDayBySelectedDays(this.date)
         // debugger;
         // this.ImportService.lockOrUnlockAllImportsByDateTimeAndLock(this.date,true)
-        this.MonthService.closeMonthByDate(this.date).subscribe(importa => {debugger})
+        this.MonthService.openOrCloseMonthByDate(this.date).subscribe(importa => {debugger})
         this.monthlock=true;
-        this.ImportService.lockOrUnlockAllImportsByDateTimeAndLock(this.date,true).subscribe();
+        // this.ImportService.lockOrUnlockAllImportsByMonthByDateAndLock(this.date,true).subscribe();
 
     }
     unlockmonth(){
-        this.MonthService.openMonthByDate(this.date).subscribe()
+        this.MonthService.openOrCloseMonthByDate(this.date).subscribe()
         this.monthlock=false;
-        this.ImportService.lockOrUnlockAllImportsByDateTimeAndLock(this.date,false).subscribe();
+        // this.ImportService.lockOrUnlockAllImportsByMonthByDateAndLock(this.date,false).subscribe();
 
 
     }

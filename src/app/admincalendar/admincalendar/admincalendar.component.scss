@@ -2,14 +2,13 @@
 .cardss{
     position:inherit;
     min-width:250px;
-    width:fit-content ;
+max-width:300px ;
     min-height: 90px;
     z-index: 10;
     height: fit-content ;
     
     background: rgb(32, 91, 167);
-    box-shadow: 0 8px 16px 16px rgba(0, 0, 0, 0.555);
-    
+    box-shadow: 0 5px 10px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     box-sizing: border-box;
     // &:hover {
     //     transition: all 0.2s ease-out;
@@ -40,4 +39,17 @@
 }
 .calendarcl{
     position: relative; bottom: 37px
+}
+.projectn{
+    white-space: pre-line;
+
+}
+.desc{display:inline-block;}
+.names{
+    color: rgb(255, 255, 255);
+}
+.hours{
+    display: inline;
+    // position:absolute;
+    // right: 10px;
 }

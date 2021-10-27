@@ -1,7 +1,8 @@
 
   <div class="modal-header">
-    <h2 class="title">{{this.name}}</h2> 
-    
+    <h2 class="title">{{this.name}} {{this.surname}}</h2> 
+    <button type="button" class="btn btn-danger" style=" position: relative;
+    top: 5px;" (click)="close()"><i class="fa fa-close"></i>  </button>
   </div>
   <div class="modal-body">
     <label for="Project" >Selected Project</label>
@@ -16,7 +17,4 @@
 
 
     
-  </div>
-
-  <div class="modal-footer"> <button type="button" class="btn btn-danger" (click)="close()"><i class="fa fa-close"></i>  close</button>
   </div>

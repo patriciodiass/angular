@@ -17,10 +17,10 @@ import { ActivatedRoute } from '@angular/router';
     templateUrl: './adminview.component.html',
     styleUrls: ['./adminview.component.scss'],
     providers: [ListService],
-    encapsulation: ViewEncapsulation.None,
+    encapsulation: ViewEncapsulation.Emulated
 })
-export class AdminviewComponent implements OnInit {
-Project:ProjectDto|undefined;
+export class AdminviewComponent implements OnInit  {
+    Project: ProjectDto | undefined;
     isselected: boolean;
     displayedColumns: string[] = [
         'observations',
@@ -31,14 +31,17 @@ Project:ProjectDto|undefined;
     ];
     totalhours: number;
     totaldays: number;
-selecteduser:string;
+    selecteduser: string;
     dataSource = [] as Array<ImportDto>;
     selectedprojectname: string;
     project = [] as ProjectDto;
     allimports = [] as Array<ImportDto>;
     selectimports = [] as Array<ImportDto>;
-    users = [] as Array<UserDto>;
-    constructor(private route: ActivatedRoute,
+    users = [] as Array<UserDto>;    usersx = [] as Array<UserDto>;
+    breakpoint: number;
+
+    constructor(
+        private route: ActivatedRoute,
         private ImportService: ImportService,
         private modalService: NgbModal,
         private UserService: UserService,
@@ -48,39 +51,40 @@ selecteduser:string;
 
     ngOnInit(): void {
         const routeParams = this.route.snapshot.paramMap;
-        const productIdFromRoute =(routeParams.get('id'));
+        const productIdFromRoute = routeParams.get('id');
 
         this.ProjectService.get(productIdFromRoute as string).subscribe(project => {
-            this.project = project
+            this.project = project;
             this.ImportService.getAllImports().subscribe(importa => {
-                ;
                 this.allimports = importa;
-                for (let x of this.allimports) {debugger
+                for (let x of this.allimports) {
                     if (x.projectId === this.project.id) {
                         this.selectimports.push(x);
                     }
                 }
-                
-            })
-           
-          })
-
-
-
-        
-        this.UserService.getListOfUsers().subscribe(importa => {
+            });
+        });
+        // this.UserService.getListOfUsers().subscribe(importa => {
+        //     debugger;
+        //     this.users = importa;
+        // });
+        this.ProjectService.getListOfAssociatedUsersById(productIdFromRoute as string).subscribe(importa => {
             debugger;
             this.users = importa;
+            if(this.users.length<5){this.breakpoint=this.users.length}
+            else if(this.users.length<10){ this.breakpoint=(this.users.length/2)}
+            else if(this.users.length<15){ this.breakpoint=(this.users.length/3)}
+            else if(this.users.length<20){ this.breakpoint=(this.users.length/4)}
+
         });
         this.isselected = true;
         this.selectimports = [];
-        debugger
-      
-        
+        debugger;
+
         this.dataSource = this.selectimports;
         console.log(this.selectimports);
     }
-    
+
     // selectedproject(selected:string) {
     //     this.isselected = true;
     //     this.selectimports = [];
@@ -106,30 +110,33 @@ selecteduser:string;
     //     this.dataSource = this.selectimports;
     //     console.log(this.selectimports);
     // }
+    cols(){debugger
+if(this.users.length<5){return this.users.length}
 
-    
-    opendetails(user: string,id:string) { this.totalhours=0;
-            this.totaldays=0;
-            this.selecteduser=id;
-    
-           
-                this.totalhours=0;
-                this.totaldays=0;
-                for (let y of this.selectimports) {
-                    if (y.creatorId === id) {debugger
-                        this.totalhours += y.hoursSpent;
-                        for (let r of y.listOfDays) {debugger
-                            this.totaldays + 1;
-                        }
-                    }
+}
+    opendetails(name:string,surname:string) {
+        this.totalhours = 0;
+
+        this.totalhours = 0;
+        this.totaldays = 0;
+
+        for (let y of this.selectimports) {debugger
+            if (y.userName === name) {
+                debugger;
+                this.totalhours += y.hoursSpent;
+                for (let r of y.listOfDays) {
+                    debugger;
+                    this.totaldays += 1;
                 }
-            
-        
+            }
+        }
         const modalRef = this.modalService.open(UserdetailsComponent, { centered: true });
         modalRef.componentInstance.data.project = this.project.name;
-        modalRef.componentInstance.data.name = user;
-        modalRef.componentInstance.data.hours=this.totalhours;
-        modalRef.componentInstance.data.days=this.totaldays;
+        modalRef.componentInstance.data.name = name;
+        modalRef.componentInstance.data.surname = surname;
+
+        modalRef.componentInstance.data.hours = this.totalhours;
+        modalRef.componentInstance.data.days = this.totaldays;
         debugger;
     }
 }

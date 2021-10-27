@@ -21,6 +21,8 @@ function configureRoutes(routesService: RoutesService) {
         iconClass: 'fas fa-calendar',
         order: 2,
         layout: eLayoutType.application,
+        requiredPolicy: 'Collaborator.User',
+
       },
       {
         path: '/projects',
@@ -28,6 +30,8 @@ function configureRoutes(routesService: RoutesService) {
         iconClass: 'fas fa-project-diagram',
         order: 3,
         layout: eLayoutType.application,
+        requiredPolicy: 'Collaborator.Projects',
+
       },
       {
         path: '/projecttypes',
@@ -35,6 +39,8 @@ function configureRoutes(routesService: RoutesService) {
         iconClass: 'fas fa-tasks',
         order: 4,
         layout: eLayoutType.application,
+        requiredPolicy: 'Collaborator.ProjectTypes',
+
       },
       {
         path: '/imports',
@@ -42,18 +48,24 @@ function configureRoutes(routesService: RoutesService) {
         iconClass: 'fas fa-file-upload',
         order: 6,
         layout: eLayoutType.application,
+        requiredPolicy: 'Collaborator.Imports',
+
       },
       {path: '/admincalendar',
       name: '::Admin Calendar',
       iconClass: 'fas fa-calendar',
       order: 7,
       layout: eLayoutType.application,
+      requiredPolicy: 'Collaborator.Admin',
+
     },  
       {path: '/tags',
       name: '::Tags',
       iconClass: 'fas fa-tags',
       order: 5,
       layout: eLayoutType.application,
+      requiredPolicy: 'Collaborator.Tags',
+
     },
     ]);
   };

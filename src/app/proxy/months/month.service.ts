@@ -1,4 +1,3 @@
-import type { MonthDto } from './models';
 import { RestService } from '@abp/ng.core';
 import { Injectable } from '@angular/core';
 
@@ -8,21 +7,6 @@ import { Injectable } from '@angular/core';
 export class MonthService {
   apiName = 'Default';
 
-  closeMonthByDate = (date: string) =>
-    this.restService.request<any, void>({
-      method: 'POST',
-      url: '/api/app/month/close-month',
-      params: { date },
-    },
-    { apiName: this.apiName });
-
-  getMonths = () =>
-    this.restService.request<any, MonthDto[]>({
-      method: 'GET',
-      url: '/api/app/month/months',
-    },
-    { apiName: this.apiName });
-
   isMonthClosedByDate = (date: string) =>
     this.restService.request<any, boolean>({
       method: 'POST',
@@ -31,10 +15,10 @@ export class MonthService {
     },
     { apiName: this.apiName });
 
-  openMonthByDate = (date: string) =>
+  openOrCloseMonthByDate = (date: string) =>
     this.restService.request<any, void>({
       method: 'POST',
-      url: '/api/app/month/open-month',
+      url: '/api/app/month/open-or-close-month',
       params: { date },
     },
     { apiName: this.apiName });
